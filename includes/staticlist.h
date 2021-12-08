@@ -1,28 +1,21 @@
 #ifndef INCLUDE_STATIC_LIST_H
 #define INCLUDE_STATIC_LIST_H
 
-#define MAX_LIST_SIZE 100
-#define MAX_STRING_LEN 30
+#define MAX 100
 
-typedef struct {
-	int registration;
-	char name[MAX_STRING_LEN];
-	float grades[3];
-} Students;
+typedef struct list List;
 
-typedef struct {
-	int quantity;
-	Students data[MAX_LIST_SIZE];
-} List;
+List* list_start(int size_type);
 
-List *create_list(void);
-void release_list(List *li_p);
+void list_end(List *li_p);
+void list_get(List *li_p, int key, void *data);
+void list_insert(List *li_p, int key, void *data);
+void list_remove(List *li_p, int key);
+void list_printf(List *li_p, void (*print_format)(void *));
 
-int size_list(List *li_p);
-int list_full(List *li_p);
-int list_empty(List *li_p);
+int list_size(List *li_p);
 
-_Bool insert_list_final(List *li_p, Students students_s);
-_Bool insert_list_begin(List *li_p, Students students_s);
+_Bool list_full(List *li_p);
+_Bool list_empty(List *li_p);
 
 #endif
