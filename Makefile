@@ -1,6 +1,8 @@
 CC=gcc
 CC_FLAGS=-Wall -Wextra -Werror -std=c99 -g
 
+CC_FLAGS_TEST=-pthread -lcheck_pic -pthread -lrt -lm -lsubunit
+
 SRC_DIR=src
 HDR_DIR=includes
 OBJ_DIR=obj
@@ -19,12 +21,12 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@printf "[Creating $@]\n"
 	@$(CC) $(CC_FLAGS) -I$(HDR_DIR)/ -c $^ -o $@
 
-test: $(TBN_FILES)
+check: $(TBN_FILES)
 	@for test in $(TBN_FILES); do printf "[Running $$test]"; ./$$test; done
 
 $(TBN_DIR)/%: $(TST_DIR)/%_test.c
 	@printf "[Creating $@ test]\n"
-	@$(CC) $< $(OBJ_FILES) -o $@ -Isnow -DSNOW_ENABLED -I$(HDR_DIR)/
+	@$(CC) $< $(OBJ_FILES) -o $@ $(CC_FLAGS_TEST) -I$(HDR_DIR)/
 
 $(TBN_DIR):
 	@printf "[Creating $@]\n"
